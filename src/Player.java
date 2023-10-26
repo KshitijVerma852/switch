@@ -1,11 +1,17 @@
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Random;
 
 public class Player {
     private final ArrayList<Card> hand = new ArrayList<Card>();
+    private final boolean controlledByUser;
+    private String name;
 
-    public Player(Player[] otherPlayers) {
+    public Player(Player[] otherPlayers, boolean controlledByUser, String name) {
+        this.controlledByUser = controlledByUser;
+        this.name = name;
         autoGen(otherPlayers);
     }
 
@@ -27,7 +33,7 @@ public class Player {
                     break;
                 }
 
-                if (Card.equals(card, newCard)) {
+                if (Card.isSameValueAndSuit(card, newCard)) {
                     found = true;
                 }
             }
@@ -54,5 +60,25 @@ public class Player {
 
     public ArrayList<Card> seeHand() {
         return hand;
+    }
+
+    public boolean isControlledByUser() {
+        return this.controlledByUser;
+    }
+
+    public static Card[] pickUpCards(NonPlayingStack nonPlayingStack, int noOfCardsToPickUp) {
+        Card[] ans = new Card[noOfCardsToPickUp];
+        for (int x = 0; x < noOfCardsToPickUp; x++) {
+            ans[x] = nonPlayingStack.pop();
+        }
+        return ans;
+    }
+
+    public void addCardsToHand(Card[] cardsToAdd) {
+        Collections.addAll(hand, cardsToAdd);
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

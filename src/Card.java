@@ -67,13 +67,21 @@ public class Card implements ICard {
         return Integer.parseInt(value) >= 1 && Integer.parseInt(value) <= 10;
     }
 
+    // TODO: Make the Card toString() method look more like a card.
     @Override
     public String toString() {
         return value + " " + suit;
     }
 
-    public static boolean equals(Card c1, Card c2) {
-        return Objects.equals(c1.getValue(), c2.getValue())
-                && Objects.equals(c1.getSuit(), c2.getSuit());
+    public static boolean isSameValueAndSuit(Card c1, Card c2) {
+        return isSameSuit(c1, c2) && isSameValue(c1, c2);
+    }
+
+    public static boolean isSameValue(Card c1, Card c2) {
+        return Objects.equals(c1.getValue(), c2.getValue());
+    }
+
+    public static boolean isSameSuit(Card c1, Card c2) {
+        return Objects.equals(c1.getSuit(), c2.getSuit());
     }
 }

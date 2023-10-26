@@ -1,11 +1,13 @@
+import interfaces.IStack;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public class NonPlayingStack {
-    private final ArrayList<Card> deck = new ArrayList<Card>();
-
+// TODO: Make an interface for this class.
+public class NonPlayingStack extends Stack {
     public NonPlayingStack(Player[] players) {
+        super();
         autoGen(players);
     }
 
@@ -13,11 +15,12 @@ public class NonPlayingStack {
     private void autoGen(Player[] otherPlayers) {
         int temp = 0;
         while (temp < (52 - otherPlayers.length * 5)) {
-            String[] cardSuits = Card.getCardSuits();
-            String[] cardValues = Card.getCardValues();
+            final String[] cardSuits = Card.getCardSuits();
+            final String[] cardValues = Card.getCardValues();
+            final Random random = new Random();
 
-            String randomCardSuit = cardSuits[(new Random()).nextInt(cardSuits.length)];
-            String randomCardValue = cardValues[(new Random()).nextInt(cardValues.length)];
+            String randomCardSuit = cardSuits[random.nextInt(cardSuits.length)];
+            String randomCardValue = cardValues[random.nextInt(cardValues.length)];
             Card newCard = new Card(randomCardSuit, randomCardValue);
 
             boolean found = false;
@@ -37,7 +40,9 @@ public class NonPlayingStack {
         }
     }
 
-    public ArrayList<Card> getDeck() {
-        return deck;
+    public Card pop() {
+        Card card = deck.get(0);
+        deck.remove(0);
+        return card;
     }
 }
